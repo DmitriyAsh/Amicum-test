@@ -25,6 +25,15 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 				<input type="checkbox" />
 				<span class="slider"></span>
 			</label>
+			<div class="user_data">
+				<p class="user_name user_value">Моисеев Михаил Сергеевич</p>
+				<p class="user_birth_date user_value">13.08.1980</p>
+				<p class="user_license user_value">Таб №: ГОКИ 0000</p>
+				<p class="user_position user_value">
+					Электрослесарь (слесарь дежурный по ремонту оборудования) 1
+					разряда
+				</p>
+			</div>
 		</div>
 		<div class="main"></div>
 	</div>
@@ -50,7 +59,7 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 }
 
 .main {
-	width: 100vw;
+	max-width: 100vw;
 	height: 100vh;
 }
 
@@ -94,8 +103,7 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 	width: 76px;
 	height: 20px;
 	align-self: flex-end;
-	margin-top: 88px;
-	margin-right: 40px;
+	margin: 88px 40px 82px 0;
 }
 
 .switch input {
@@ -135,5 +143,39 @@ input:checked + .slider:before {
 	-webkit-transform: translateX(50px);
 	-ms-transform: translateX(50px);
 	transform: translateX(50px);
+}
+
+.user_data {
+	color: #ffffff;
+	background-color: #586c92;
+	max-width: 582px;
+	align-self: center;
+	padding: 10px 10px 0 15px;
+	border-radius: 4px;
+	box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.45);
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.user_value {
+	font-family: 'Montserrat', sans-serif;
+	margin-bottom: 10px;
+}
+
+.user_name {
+	font-weight: 700;
+	font-size: 32px;
+}
+
+.user_birth_date {
+	font-weight: 600;
+	font-size: 24px;
+}
+
+.user_license,
+.user_position {
+	font-weight: 600;
+	font-size: 16px;
 }
 </style>
