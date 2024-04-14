@@ -34,13 +34,88 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 					разряда
 				</p>
 			</div>
+			<div class="study_pages">
+				<div class="breafing study_pages_size">1</div>
+				<div class="tests_done study_pages_size">2</div>
+				<div class="pre-shift_exam study_pages_size">3</div>
+				<div class="certification_through study_pages_size">4</div>
+			</div>
 		</div>
-		<div class="main"></div>
+		<div class="main">
+			<div class="amicum_logo"></div>
+			<div class="main_pages">
+				<div class="main_pages_size">
+					<p>Начать работу</p>
+					<img src="" alt="" />
+				</div>
+				<div class="main_pages_size">
+					<p>Уведомления</p>
+					<img src="" alt="" />
+				</div>
+				<div class="main_pages_size">
+					<p>Обучение</p>
+					<img src="" alt="" />
+				</div>
+				<div class="main_pages_size">
+					<p>Достижения</p>
+					<img src="" alt="" />
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.main_pages_size {
+	width: 390px;
+	height: 300px;
+	background-color: #ef7f1a;
+}
+
+.main_pages {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	margin-top: 280px;
+	gap: 100px;
+	@media only screen and (min-width: 2032px) {
+		margin-left: 100px;
+		margin-right: 100px;
+	}
+}
+
+.amicum_logo {
+	background-image: url(/src/images/AMICUM-logo.png);
+	width: 217px;
+	height: 77px;
+	margin: 20px 20px 0 0;
+	position: fixed;
+	right: 0;
+}
+
+.study_pages {
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 58px;
+	justify-content: center;
+	align-items: center;
+}
+
+.study_pages_size {
+	width: 281px;
+	height: 260px;
+	background-color: #586c92;
+	box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.45);
+	margin-bottom: 20px;
+	border-radius: 4px;
+}
+
+.study_pages_size:nth-child(odd) {
+	margin-right: 20px;
+}
 
 .container {
 	display: flex;
@@ -49,18 +124,23 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 
 .menu {
 	width: 662px;
-	height: 100vh;
+	position: sticky;
+	top: 0;
 	background-color: #353d54;
 	border-top-right-radius: 16px;
 	border-bottom-right-radius: 16px;
 	box-shadow: 6px 0px 7px rgba(0, 0, 0, 0.3);
 	display: flex;
 	flex-direction: column;
+	@media only screen and (min-height: 1067px) {
+		height: 100vh;
+	}
 }
 
 .main {
-	max-width: 100vw;
-	height: 100vh;
+	width: calc(100vw - 662px);
+	display: flex;
+	flex-direction: column;
 }
 
 .menu_head {
@@ -118,7 +198,6 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 	right: 0;
 	bottom: 0;
 	background-color: #586c92;
-	-webkit-transition: 0.4s;
 	transition: 0.4s;
 	border-radius: 12px;
 }
@@ -131,7 +210,6 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 	left: -25px;
 	bottom: -21px;
 	background-image: url(/src/icons/theme-switcher.svg);
-	-webkit-transition: 0.5s;
 	transition: 0.5s;
 }
 
