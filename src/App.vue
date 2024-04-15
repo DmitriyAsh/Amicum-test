@@ -44,22 +44,22 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 		<div class="main">
 			<div class="amicum_logo"></div>
 			<div class="main_pages">
-				<div class="main_pages_size">
-					<p>Начать работу</p>
-					<img src="" alt="" />
-				</div>
-				<div class="main_pages_size">
-					<p>Уведомления</p>
-					<img src="" alt="" />
-				</div>
-				<div class="main_pages_size">
-					<p>Обучение</p>
-					<img src="" alt="" />
-				</div>
-				<div class="main_pages_size">
-					<p>Достижения</p>
-					<img src="" alt="" />
-				</div>
+				<button class="main_pages_size">
+					<p class="main_pages_text">Начать работу</p>
+					<img src="/src/images/bumper.png" alt="bumper" />
+				</button>
+				<button class="main_pages_size notes_parent">
+					<p class="main_pages_text">Уведомления</p>
+					<img src="/src/images/notes.png" alt="" />
+				</button>
+				<button class="main_pages_size">
+					<p class="main_pages_text">Обучение</p>
+					<img src="/src/images/study.png" alt="" />
+				</button>
+				<button class="main_pages_size">
+					<p class="main_pages_text">Достижения</p>
+					<img src="/src/images/achievements.png" alt="" />
+				</button>
 			</div>
 		</div>
 	</div>
@@ -68,10 +68,47 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+.notes_parent {
+	position: relative;
+}
+
+.notes_parent::before {
+	position: absolute;
+	top: -30px;
+	right: -30px;
+	content: '2';
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background-color: #acd91b;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 600;
+	font-size: 32px;
+}
+
+.main_pages_text {
+	margin-bottom: 40px;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 600;
+	font-size: 36px;
+	color: #ffffff;
+}
+
 .main_pages_size {
 	width: 390px;
 	height: 300px;
 	background-color: #ef7f1a;
+	border-radius: 4px;
+	box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.45);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border: none;
+	cursor: pointer;
+	padding-top: 40px;
 }
 
 .main_pages {
