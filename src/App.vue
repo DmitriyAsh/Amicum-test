@@ -1,6 +1,6 @@
 <script setup>
 import moment from 'moment';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const date = ref(setTime());
 
@@ -8,7 +8,35 @@ function setTime() {
 	return moment().format('DD.MM.YYYY HH:mm');
 }
 
-setInterval(() => (date.value = setTime()), 1000 * 60);
+setInterval(() => (date.value = setTime()), 1000 * 30);
+
+const userData = ref({
+	userName: 'Моисеев Михаил Сергеевич',
+	birthDate: '13.08.1980',
+	userLicense: 'Таб №: ГОКИ 0000',
+	userPosition:
+		'Электрослесарь (слесарь дежурный по ремонту оборудования) 1 разряда',
+});
+
+const colors = {
+	true: '#B2D63C',
+	false: '#EF7F1A',
+};
+
+const totalTests = 500;
+const testsDone = 108;
+const progressOfTests = computed(() => (testsDone / totalTests) * 100);
+const totalDays = 365;
+const daysUntilExam = 30;
+const daysUntilExamProgressBar = computed(
+	() => (daysUntilExam / totalDays) * 100
+);
+const colorByProgress = computed(() => {
+	if (daysUntilExam <= 30) {
+		return '#EF7F1A';
+	}
+	return '#B2D63C';
+});
 </script>
 
 <template>
@@ -26,19 +54,97 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 				<span class="slider"></span>
 			</label>
 			<div class="user_data">
-				<p class="user_name user_value">Моисеев Михаил Сергеевич</p>
-				<p class="user_birth_date user_value">13.08.1980</p>
-				<p class="user_license user_value">Таб №: ГОКИ 0000</p>
+				<p class="user_name user_value">{{ userData.userName }}</p>
+				<p class="user_birth_date user_value">
+					{{ userData.birthDate }}
+				</p>
+				<p class="user_license user_value">
+					{{ userData.userLicense }}
+				</p>
 				<p class="user_position user_value">
-					Электрослесарь (слесарь дежурный по ремонту оборудования) 1
-					разряда
+					{{ userData.userPosition }}
 				</p>
 			</div>
 			<div class="study_pages">
-				<div class="breafing study_pages_size">1</div>
-				<div class="tests_done study_pages_size">2</div>
-				<div class="pre-shift_exam study_pages_size">3</div>
-				<div class="certification_through study_pages_size">4</div>
+				<button class="study_pages_size">
+					<p class="study_pages_text">Инструктаж</p>
+					<svg
+						width="145"
+						height="145"
+						viewBox="0 0 250 250"
+						class="circular-progress"
+						style="--progress: 100"
+					>
+						<circle class="bg"></circle>
+						<circle
+							class="fg"
+							:style="`--color: ${colors.true}`"
+						></circle>
+					</svg>
+					<img
+						src="/src/images/breafing.png"
+						alt="#"
+						class="breafing"
+					/>
+				</button>
+				<button class="study_pages_size">
+					<p class="study_pages_text">Предсменный инструктаж</p>
+					<svg
+						width="145"
+						height="145"
+						viewBox="0 0 250 250"
+						class="circular-progress"
+						style="--progress: 100"
+					>
+						<circle class="bg"></circle>
+						<circle
+							class="fg"
+							:style="`--color: ${colors.false}`"
+						></circle>
+					</svg>
+					<img
+						src="/src/images/pre-shift-exam.png"
+						alt="#"
+						class="pre_shift_exam"
+					/>
+				</button>
+				<button class="study_pages_size">
+					<p class="study_pages_text">Тестов выполнено&shy;</p>
+					<svg
+						width="145"
+						height="145"
+						viewBox="0 0 250 250"
+						class="circular-progress"
+						:style="`--progress: ${progressOfTests}`"
+					>
+						<circle class="bg"></circle>
+						<circle
+							class="fg"
+							:style="`--color: ${colors.true}`"
+						></circle>
+					</svg>
+					<p class="tests_done">{{ testsDone }}</p>
+				</button>
+				<button class="study_pages_size">
+					<p class="study_pages_text">Аттестация через&shy;</p>
+					<svg
+						width="145"
+						height="145"
+						viewBox="0 0 250 250"
+						class="circular-progress"
+						:style="`--progress: ${daysUntilExamProgressBar}`"
+					>
+						<circle class="bg"></circle>
+						<circle
+							class="fg"
+							:style="`--color: ${colorByProgress}`"
+						></circle>
+					</svg>
+					<p class="days_unitl_exam">
+						<span>{{ daysUntilExam }}</span>
+						<span class="text_days">дней</span>
+					</p>
+				</button>
 			</div>
 		</div>
 		<div class="main">
@@ -67,6 +173,36 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.circular-progress {
+	--size: 250px;
+	--half-size: calc(var(--size) / 2);
+	--stroke-width: 20px;
+	--radius: calc((var(--size) - var(--stroke-width)) / 2);
+	--circumference: calc(var(--radius) * pi * 2);
+	--dash: calc((var(--progress) * var(--circumference)) / 100);
+}
+
+.circular-progress circle {
+	cx: var(--half-size);
+	cy: var(--half-size);
+	r: var(--radius);
+	stroke-width: var(--stroke-width);
+	fill: none;
+	stroke-linecap: round;
+}
+
+.circular-progress circle.bg {
+	stroke: #353d54;
+}
+
+.circular-progress circle.fg {
+	transform: rotate(-90deg);
+	transform-origin: var(--half-size) var(--half-size);
+	stroke-dasharray: var(--dash) calc(var(--circumference) - var(--dash));
+	transition: stroke-dasharray 0.3s linear 0s;
+	stroke: var(--color);
+}
 
 .notes_parent {
 	position: relative;
@@ -139,6 +275,14 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 	margin-top: 58px;
 	justify-content: center;
 	align-items: center;
+	text-align: center;
+}
+
+.study_pages_text {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	font-size: 20px;
+	color: #ffffff;
 }
 
 .study_pages_size {
@@ -148,10 +292,59 @@ setInterval(() => (date.value = setTime()), 1000 * 60);
 	box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.45);
 	margin-bottom: 20px;
 	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 13px;
+	border: none;
+	cursor: pointer;
+	position: relative;
+}
+
+.breafing {
+	position: absolute;
+	bottom: 60px;
+	right: 90px;
+}
+
+.pre_shift_exam {
+	position: absolute;
+	bottom: 60px;
+	right: 97px;
+}
+
+.tests_done {
+	position: absolute;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 600;
+	font-size: 45px;
+	color: #ffffff;
+	bottom: 75px;
+}
+
+.days_unitl_exam {
+	position: absolute;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 600;
+	font-size: 40px;
+	color: #ffffff;
+	bottom: 70px;
+	display: flex;
+	flex-direction: column;
+}
+
+.text_days {
+	font-size: 20px;
+	margin-top: -5px;
 }
 
 .study_pages_size:nth-child(odd) {
 	margin-right: 20px;
+}
+
+.study_pages_size:nth-child(1) {
+	gap: 30px;
 }
 
 .container {
