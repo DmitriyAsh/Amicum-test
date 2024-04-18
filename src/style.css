@@ -3,3 +3,9 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+
+:root {
+	--bg-body: #586c92;
+	--bg-menu: #353d54;
+	--text-color: #fff;
+}

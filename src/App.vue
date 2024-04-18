@@ -37,10 +37,26 @@ const colorByProgress = computed(() => {
 	}
 	return '#B2D63C';
 });
+
+const getInitialDarkMode = () => {
+	const userPreference = localStorage.getItem('darkMode');
+	return userPreference === 'true' ? true : false;
+};
+
+const darkMode = ref(getInitialDarkMode());
+
+const saveDarkModePreference = (isDarkMode) => {
+	localStorage.setItem('darkMode', isDarkMode);
+};
+
+const toggleDarkMode = () => {
+	darkMode.value = !darkMode.value;
+	saveDarkModePreference(darkMode.value);
+};
 </script>
 
 <template>
-	<div class="container">
+	<div class="container" :data-theme="darkMode">
 		<div class="menu">
 			<div class="menu_head">
 				<div class="date">{{ date }}</div>
@@ -49,7 +65,7 @@ const colorByProgress = computed(() => {
 					<img src="/src/icons/exit-icon.svg" alt="#" />
 				</button>
 			</div>
-			<label class="switch">
+			<label class="switch" @change="toggleDarkMode">
 				<input type="checkbox" />
 				<span class="slider"></span>
 			</label>
@@ -173,6 +189,12 @@ const colorByProgress = computed(() => {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+[data-theme='true'] {
+	--bg-body: #ffffff;
+	--bg-menu: #f2f2f2;
+	--text-color: #000;
+}
 
 .circular-progress {
 	--size: 250px;
@@ -349,14 +371,16 @@ const colorByProgress = computed(() => {
 
 .container {
 	display: flex;
-	background-color: #586c92;
+	background-color: var(--bg-body);
+	transition: background-color 0.3s;
 }
 
 .menu {
+	transition: background-color 0.3s;
 	width: 662px;
 	position: sticky;
 	top: 0;
-	background-color: #353d54;
+	background-color: var(--bg-menu);
 	border-top-right-radius: 16px;
 	border-bottom-right-radius: 16px;
 	box-shadow: 6px 0px 7px rgba(0, 0, 0, 0.3);
@@ -386,7 +410,7 @@ const colorByProgress = computed(() => {
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 700;
 	font-size: 20px;
-	color: #ffffff;
+	color: var(--text-color);
 	width: 106px;
 }
 
@@ -403,7 +427,7 @@ const colorByProgress = computed(() => {
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 600;
 	font-size: 24px;
-	color: #ffffff;
+	color: var(--text-color);
 	padding-right: 10px;
 }
 
@@ -441,10 +465,6 @@ const colorByProgress = computed(() => {
 	bottom: -21px;
 	background-image: url(/src/icons/theme-switcher.svg);
 	transition: 0.5s;
-}
-
-input:checked + .slider {
-	background-color: #000;
 }
 
 input:checked + .slider:before {
